@@ -2,7 +2,7 @@
 using MelonLoader;
 using UnityEngine;
 
-[assembly: MelonInfo(typeof(CheatNotify.Core), "CheatNotify", "1.0.1", "alydev", null)]
+[assembly: MelonInfo(typeof(CheatNotify.Core), "CheatNotify", "1.0.2", "alydev", null)]
 [assembly: MelonGame("Finn Schuuring", "King of the Bridge")]
 
 namespace CheatNotify;
@@ -108,6 +108,7 @@ public class Core : MelonMod
             _lastCheatPiece = piece;
             string reasons = string.Join(", ", cheatReasons.Select(x => Enum.GetName(typeof(ChessMatchManager.ChessCheatReason), x)));
             (var ruleBookPage, var score) = CheatReasonsToRuleBookPage(__instance.ruleBookScreenManager, cheatReasons, piece.pieceData.pieceType);
+            SoundManager.LoadSoundEffect(piece.transform, SoundManager.instance.chess_accusation_false);
             Melon<Core>.Logger.Warning($"Cheater! {_lastCheatPiece.pieceColor} {_lastCheatPiece.pieceData.name} {ruleBookPage.ruleBreakText} (Position: {Position(originPosition)} to {Position(movedPosition)}; Score: {score}; {reasons})");
         }
 
